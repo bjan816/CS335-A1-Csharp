@@ -17,5 +17,11 @@ namespace A1.Data
             IEnumerable<Product> allProducts = await _dbContext.Products.ToListAsync<Product>();
             return allProducts;
         }
+
+        public async Task<Comment?> GetCommentById(int commentId)
+        {
+            return await _dbContext.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+        }
     }
 }

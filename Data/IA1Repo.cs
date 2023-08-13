@@ -5,5 +5,6 @@ namespace A1.Data
     public interface IA1Repo
     {
         Task<IEnumerable<Product>> GetAllProducts();
+        Task<Comment?> GetCommentById(int commentId);
     }
 }

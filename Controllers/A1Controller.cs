@@ -116,5 +116,21 @@ namespace A1.Controllers
 
             return File(imageBytes, contentType);
         }
+
+        // GET /webapi/GetComment/{commentId}
+
+        [HttpGet("GetComment/{commentId}")]
+        public async Task<IActionResult> GetComment(int commentId)
+        {
+            Comment? comment = await _repository.GetCommentById(commentId);
+
+            if (comment == null)
+            {
+                string errorMessage = $"Comment {commentId} does not exist.";
+                return BadRequest(errorMessage);
+            }
+
+            return Ok(comment);
+        }
     }
 }
