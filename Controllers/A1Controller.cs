@@ -15,6 +15,12 @@ namespace A1.Controllers
             _repository = repository;
         }
 
+        private string GetContentType(string prefix, string fileName)
+        {
+            string extension = Path.GetExtension(fileName).ToLower();
+            return $"{prefix}{extension}";
+        }
+
         // GET /webapi/GetVersion
         [HttpGet("GetVersion")]
         public IActionResult GetVersion()
@@ -22,30 +28,6 @@ namespace A1.Controllers
             const string upi = "bjan816";
             const string versionString = $"1.0.0 (Ngongotahā) by {upi}";
             return Ok(versionString);
-        }
-
-        private string GetContentType(string fileName)
-        {
-            switch (Path.GetExtension(fileName).ToLower())
-            {
-                case ".png":
-                {
-                    return "image/png";
-                }
-                case ".jpg":
-                case ".jpeg":
-                {
-                    return "image/jpeg";
-                }
-                case ".gif":
-                {
-                    return "image/gif";
-                }
-                default:
-                {
-                    return "application/octet-stream";
-                }
-            }
         }
 
         // GET /webapi/GetLogo
@@ -62,7 +44,7 @@ namespace A1.Controllers
 
             byte[] imageBytes = System.IO.File.ReadAllBytes(logoImageFilePath);
 
-            string contentType = GetContentType(logoImageFilePath);
+            string contentType = GetContentType("image/", logoImageFilePath);
 
             return File(imageBytes, contentType);
         }
