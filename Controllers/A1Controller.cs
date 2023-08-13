@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using A1.Data;
+using A1.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace A1.Controllers
 {
@@ -6,6 +8,13 @@ namespace A1.Controllers
     [ApiController]
     public class A1Controller : Controller
     {
+        private readonly IA1Repo _repository;
+
+        public A1Controller(IA1Repo repository)
+        {
+            _repository = repository;
+        }
+
         // GET /webapi/GetVersion
         [HttpGet("GetVersion")]
         public IActionResult GetVersion()
@@ -56,6 +65,14 @@ namespace A1.Controllers
             string contentType = GetContentType(logoImageFilePath);
 
             return File(imageBytes, contentType);
+        }
+
+        [HttpGet("AllItems")]
+        public async Task<IActionResult> GetAllProducts()
+        {
+            IEnumerable<Product> products = await _repository.GetAllProducts();
+
+            return Ok(products);
         }
     }
 }

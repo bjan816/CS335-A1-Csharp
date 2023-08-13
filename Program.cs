@@ -1,4 +1,4 @@
-
+using A1.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +14,10 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddDbContext<A1DbContext>(options => options.UseSqlite(builder.Configuration["WebAPIConnection"]));
+
+        builder.Services.AddScoped<IA1Repo, A1Repo>();
 
         var app = builder.Build();
 
