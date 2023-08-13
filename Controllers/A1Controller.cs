@@ -21,6 +21,18 @@ namespace A1.Controllers
             return $"{prefix}{extension}";
         }
 
+        private byte[]? ReadAllBytes(string filePath)
+        {
+            if (!System.IO.File.Exists(filePath))
+            {
+                return null;
+            }
+
+            byte[] imageBytes = System.IO.File.ReadAllBytes(filePath);
+
+            return imageBytes;
+        }
+
         // GET /webapi/GetVersion
         [HttpGet("GetVersion")]
         public IActionResult GetVersion()
@@ -37,12 +49,12 @@ namespace A1.Controllers
             string currentDirectory = Directory.GetCurrentDirectory();
             string logoImageFilePath = Path.Combine(currentDirectory, "Logos/Logo.png");
 
-            if (!System.IO.File.Exists(logoImageFilePath))
+            byte[]? imageBytes = ReadAllBytes(logoImageFilePath);
+
+            if (imageBytes == null)
             {
                 return NotFound();
             }
-
-            byte[] imageBytes = System.IO.File.ReadAllBytes(logoImageFilePath);
 
             string contentType = GetContentType("image/", logoImageFilePath);
 
