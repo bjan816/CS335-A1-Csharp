@@ -74,5 +74,22 @@ namespace A1.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet("Items/{searchTerm}")]
+        public async Task<IActionResult> GetItems(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return BadRequest("Search term must not be empty.");
+            }
+
+            IEnumerable<Product> matchedProducts = await _repository.GetAllProducts();
+
+            matchedProducts = matchedProducts
+                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            return Ok(matchedProducts);
+        }
     }
 }
