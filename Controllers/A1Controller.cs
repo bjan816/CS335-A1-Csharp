@@ -85,5 +85,36 @@ namespace A1.Controllers
 
             return Ok(matchedProducts);
         }
+
+        // GET /webapi/{itemId}
+
+        [HttpGet("{itemId}")]
+        public IActionResult GetItemImage(int itemId)
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string itemImagesDirectory = Path.Combine(currentDirectory, "ItemsImages/");
+            string[] files = Directory.GetFiles(itemImagesDirectory, itemId + ".*");
+            string imageFilePath;
+
+            if (files.Length <= 0)
+            {
+                imageFilePath = Path.Combine(currentDirectory, "ItemsImages/default.png");
+            }
+            else
+            {
+                imageFilePath = files[0];
+            }
+
+            byte[]? imageBytes = ReadAllBytes(imageFilePath);
+
+            if (imageBytes == null)
+            {
+                return NotFound();
+            }
+
+            string contentType = GetContentType("image/", imageFilePath);
+
+            return File(imageBytes, contentType);
+        }
     }
 }
