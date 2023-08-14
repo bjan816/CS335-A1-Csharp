@@ -1,5 +1,6 @@
 ﻿using A1.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace A1.Data
 {
@@ -22,6 +23,13 @@ namespace A1.Data
         {
             return await _dbContext.Comments
                 .FirstOrDefaultAsync(c => c.Id == commentId);
+        }
+
+        public async Task<Comment> AddComment(Comment comment)
+        {
+            EntityEntry<Comment> entityEntry = await _dbContext.Comments.AddAsync(comment);
+            await _dbContext.SaveChangesAsync();
+            return entityEntry.Entity;
         }
     }
 }

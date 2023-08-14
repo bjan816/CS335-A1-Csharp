@@ -1,4 +1,5 @@
 ﻿using A1.Data;
+using A1.Dtos;
 using A1.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -131,6 +132,29 @@ namespace A1.Controllers
             }
 
             return Ok(comment);
+        }
+
+        // POST /webapi/WriteComment
+
+        [HttpPost("WriteComment")]
+        public async Task<IActionResult> WriteComment([FromBody] CommentInput commentInput)
+        {
+            if (string.IsNullOrWhiteSpace(commentInput.UserComment) || string.IsNullOrWhiteSpace(commentInput.Name))
+            {
+                return BadRequest("Both UserComment and Name must be provided.");
+            }
+
+            Comment newComment = new Comment
+            {
+                UserComment = commentInput.UserComment,
+                Name = commentInput.Name,
+                Time = DateTime.UtcNow,
+                IP = Request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown"
+            };
+
+            await _repository.AddComment(newComment);
+
+            return CreatedAtAction(nameof(GetComment), new { commentId = newComment.Id }, newComment);
         }
     }
 }

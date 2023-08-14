@@ -6,5 +6,6 @@ namespace A1.Data
     {
         Task<IEnumerable<Product>> GetAllProducts();
         Task<Comment?> GetCommentById(int commentId);
+        Task<Comment> AddComment(Comment comment);
     }
 }

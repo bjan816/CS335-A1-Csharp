@@ -10,7 +10,7 @@ namespace A1.Models
 
         [Required] public string Name { get; set; }
 
-        [Required] public string Time { get; set; }
+        [Required] public DateTime Time { get; set; }
 
         [Required] public string IP { get; set; }
     }
