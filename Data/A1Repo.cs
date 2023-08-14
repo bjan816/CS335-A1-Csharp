@@ -19,6 +19,13 @@ namespace A1.Data
             return allProducts;
         }
 
+        public IQueryable<Comment> GetMostRecentComments(int count)
+        {
+            return _dbContext.Comments
+                .OrderByDescending(c => c.Time)
+                .Take(count);
+        }
+
         public async Task<Comment?> GetCommentById(int commentId)
         {
             return await _dbContext.Comments

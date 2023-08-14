@@ -156,5 +156,20 @@ namespace A1.Controllers
 
             return CreatedAtAction(nameof(GetComment), new { commentId = newComment.Id }, newComment);
         }
+
+        // GET /webapi/Comments
+
+        [HttpGet("Comments")]
+        public IActionResult Comments(int? count = 5)
+        {
+            if (count <= 0)
+            {
+                return BadRequest("Count parameter must be a positive integer.");
+            }
+
+            List<Comment> comments = _repository.GetMostRecentComments(count.Value).ToList();
+
+            return Ok(comments);
+        }
     }
 }
