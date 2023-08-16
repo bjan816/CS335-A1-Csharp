@@ -62,6 +62,8 @@ namespace A1.Controllers
             return File(imageBytes, contentType);
         }
 
+        // GET /webapi/AllItems
+
         [HttpGet("AllItems")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -69,6 +71,8 @@ namespace A1.Controllers
 
             return Ok(products);
         }
+
+        // GET / webapi/Items/{searchTerm}
 
         [HttpGet("Items/{searchTerm}")]
         public async Task<IActionResult> GetItems(string searchTerm)
