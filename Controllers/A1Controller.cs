@@ -19,6 +19,13 @@ namespace A1.Controllers
         private string GetContentType(string prefix, string fileName)
         {
             string extension = Path.GetExtension(fileName).ToLower();
+
+            if (extension.Length >= 1)
+            {
+                // Trim the first character
+                extension = extension[1..];
+            }
+
             return $"{prefix}{extension}";
         }
 
