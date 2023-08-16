@@ -98,9 +98,9 @@ namespace A1.Controllers
             return Ok(matchedProducts);
         }
 
-        // GET /webapi/{itemId}
+        // GET /webapi/ItemImage/{itemId}
 
-        [HttpGet("{itemId}")]
+        [HttpGet("ItemImage/{itemId}")]
         public IActionResult GetItemImage(int itemId)
         {
             string currentDirectory = Directory.GetCurrentDirectory();
