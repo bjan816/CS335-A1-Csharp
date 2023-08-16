@@ -159,7 +159,7 @@ namespace A1.Controllers
             {
                 UserComment = commentInput.UserComment,
                 Name = commentInput.Name,
-                Time = DateTime.UtcNow,
+                Time = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ"),
                 IP = Request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown"
             };
 
