@@ -101,8 +101,10 @@ namespace A1.Controllers
         // GET /webapi/ItemImage/{itemId}
 
         [HttpGet("ItemImage/{itemId}")]
-        public IActionResult GetItemImage(int itemId)
+        public IActionResult GetItemImage(string itemId)
         {
+            itemId = new string(itemId.Where(char.IsDigit).ToArray());
+
             string currentDirectory = Directory.GetCurrentDirectory();
             string itemImagesDirectory = Path.Combine(currentDirectory, "ItemsImages/");
             string[] files = Directory.GetFiles(itemImagesDirectory, itemId + ".*");
