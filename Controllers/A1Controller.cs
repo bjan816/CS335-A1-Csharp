@@ -50,8 +50,8 @@ namespace A1.Controllers
             return Ok(versionString);
         }
 
-        // GET /webapi/GetLogo
-        [HttpGet("GetLogo")]
+        // GET /webapi/Logo
+        [HttpGet("Logo")]
         public IActionResult GetLogo()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
