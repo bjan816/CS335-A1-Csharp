@@ -19,6 +19,12 @@ namespace A1.Data
             return allProducts;
         }
 
+        public async Task<IEnumerable<Comment>> GetAllComments()
+        {
+            IEnumerable<Comment> allComments = await _dbContext.Comments.ToListAsync<Comment>();
+            return allComments;
+        }
+
         public IQueryable<Comment> GetMostRecentComments(int count)
         {
             return _dbContext.Comments

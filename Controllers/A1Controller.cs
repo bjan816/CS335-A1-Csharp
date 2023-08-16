@@ -170,15 +170,26 @@ namespace A1.Controllers
 
         // GET /webapi/Comments
 
-        [HttpGet("Comments")]
-        public IActionResult Comments(int? count = 5)
+        [HttpGet("Comments/{count?}")]
+        public async Task<IActionResult> Comments(int count = 5)
         {
-            if (count <= 0)
-            {
-                return BadRequest("Count parameter must be a positive integer.");
-            }
+            var enumerableAllComments = await _repository.GetAllComments();
+            var allComments = enumerableAllComments.ToList();
 
-            List<Comment> comments = _repository.GetMostRecentComments(count.Value).ToList();
+            List<Comment> comments = new List<Comment>();
+
+            if (allComments.Any())
+            {
+                if (count > allComments.Count())
+                {
+                    count = allComments.Count();
+                }
+
+                comments = allComments
+                    .OrderByDescending(c => c.Time)
+                    .Take(count)
+                    .ToList();
+            }
 
             return Ok(comments);
         }
