@@ -18,12 +18,23 @@ namespace A1.Controllers
 
         private string GetContentType(string prefix, string fileName)
         {
+            var contentTypeMapping = new Dictionary<string, string>()
+            {
+                {"jpg", "jpeg" },
+                {"PDF", "pdf" }
+            };
+
             string extension = Path.GetExtension(fileName).ToLower();
 
             if (extension.Length >= 1)
             {
                 // Trim the first character
                 extension = extension[1..];
+            }
+
+            if (contentTypeMapping.ContainsKey(extension))
+            {
+                extension = contentTypeMapping[extension];
             }
 
             return $"{prefix}{extension}";
@@ -97,9 +108,8 @@ namespace A1.Controllers
 
         [HttpGet("ItemImage/{itemId}")]
         public IActionResult GetItemImage(string itemId)
-        {
-            itemId = new string(itemId.Where(char.IsDigit).ToArray());
 
+        {
             string currentDirectory = Directory.GetCurrentDirectory();
             string itemImagesDirectory = Path.Combine(currentDirectory, "ItemsImages/");
             string[] files = Directory.GetFiles(itemImagesDirectory, itemId + ".*");
@@ -114,16 +124,8 @@ namespace A1.Controllers
                 imageFilePath = files[0];
             }
 
-            byte[]? imageBytes = ReadAllBytes(imageFilePath);
-
-            if (imageBytes == null)
-            {
-                return NotFound();
-            }
-
             string contentType = GetContentType("image/", imageFilePath);
-
-            return File(imageBytes, contentType);
+            return PhysicalFile(imageFilePath, contentType);
         }
 
         // GET /webapi/GetComment/{commentId}
