@@ -56,17 +56,12 @@ namespace A1.Controllers
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             string logoImageFilePath = Path.Combine(currentDirectory, "Logos/Logo.png");
-
-            byte[]? imageBytes = ReadAllBytes(logoImageFilePath);
-
-            if (imageBytes == null)
+            string responseHeader = "image/png";
+            if (System.IO.File.Exists(logoImageFilePath))
             {
-                return NotFound();
+                return PhysicalFile(logoImageFilePath, responseHeader);
             }
-
-            string contentType = GetContentType("image/", logoImageFilePath);
-
-            return File(imageBytes, contentType);
+            return NotFound();
         }
 
         // GET /webapi/AllItems
