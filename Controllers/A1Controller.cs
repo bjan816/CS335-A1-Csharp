@@ -98,7 +98,7 @@ namespace A1.Controllers
             IEnumerable<Product> matchedProducts = await _repository.GetAllProducts();
 
             matchedProducts = matchedProducts
-                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
 
             return Ok(matchedProducts);
         }
@@ -148,11 +148,6 @@ namespace A1.Controllers
         [HttpPost("WriteComment")]
         public async Task<ActionResult> WriteComment(CommentInput commentInput)
         {
-            if (string.IsNullOrWhiteSpace(commentInput.UserComment) || string.IsNullOrWhiteSpace(commentInput.Name))
-            {
-                return BadRequest("Both UserComment and Name must be provided.");
-            }
-
             Comment newComment = new Comment
             {
                 UserComment = commentInput.UserComment,
