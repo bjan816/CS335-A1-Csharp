@@ -21,7 +21,7 @@ namespace A1.Controllers
             var contentTypeMapping = new Dictionary<string, string>()
             {
                 {"jpg", "jpeg" },
-                {"PDF", "pdf" }
+                {"svg", "svg+xml" }
             };
 
             string extension = Path.GetExtension(fileName).ToLower();
@@ -88,7 +88,7 @@ namespace A1.Controllers
         // GET / webapi/Items/{searchTerm}
 
         [HttpGet("Items/{searchTerm}")]
-        public async Task<ActionResult> GetItems(string searchTerm)
+        public async Task<ActionResult<IEnumerable<Product>>> GetItems(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -116,7 +116,7 @@ namespace A1.Controllers
 
             if (files.Length <= 0)
             {
-                imageFilePath = Path.Combine(currentDirectory, "ItemsImages/default.png");
+                imageFilePath = Path.Combine(itemImagesDirectory, "default.png");
             }
             else
             {
