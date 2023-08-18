@@ -54,7 +54,7 @@ namespace A1.Controllers
 
         // GET /webapi/GetVersion
         [HttpGet("GetVersion")]
-        public IActionResult GetVersion()
+        public ActionResult GetVersion()
         {
             const string upi = "bjan816";
             const string versionString = $"1.0.0 (Ngongotahā) by {upi}";
@@ -63,7 +63,7 @@ namespace A1.Controllers
 
         // GET /webapi/Logo
         [HttpGet("Logo")]
-        public IActionResult GetLogo()
+        public ActionResult GetLogo()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             string logoImageFilePath = Path.Combine(currentDirectory, "Logos/Logo.png");
@@ -78,7 +78,7 @@ namespace A1.Controllers
         // GET /webapi/AllItems
 
         [HttpGet("AllItems")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             IEnumerable<Product> products = await _repository.GetAllProducts();
 
@@ -88,7 +88,7 @@ namespace A1.Controllers
         // GET / webapi/Items/{searchTerm}
 
         [HttpGet("Items/{searchTerm}")]
-        public async Task<IActionResult> GetItems(string searchTerm)
+        public async Task<ActionResult> GetItems(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -107,7 +107,7 @@ namespace A1.Controllers
         // GET /webapi/ItemImage/{itemId}
 
         [HttpGet("ItemImage/{itemId}")]
-        public IActionResult GetItemImage(string itemId)
+        public ActionResult GetItemImage(string itemId)
 
         {
             string currentDirectory = Directory.GetCurrentDirectory();
@@ -131,7 +131,7 @@ namespace A1.Controllers
         // GET /webapi/GetComment/{commentId}
 
         [HttpGet("GetComment/{commentId}")]
-        public async Task<IActionResult> GetComment(int commentId)
+        public async Task<ActionResult> GetComment(int commentId)
         {
             Comment? comment = await _repository.GetCommentById(commentId);
 
@@ -147,7 +147,7 @@ namespace A1.Controllers
         // POST /webapi/WriteComment
 
         [HttpPost("WriteComment")]
-        public async Task<IActionResult> WriteComment([FromBody] CommentInput commentInput)
+        public async Task<ActionResult> WriteComment([FromBody] CommentInput commentInput)
         {
             if (string.IsNullOrWhiteSpace(commentInput.UserComment) || string.IsNullOrWhiteSpace(commentInput.Name))
             {
@@ -170,7 +170,7 @@ namespace A1.Controllers
         // GET /webapi/Comments
 
         [HttpGet("Comments/{count?}")]
-        public async Task<IActionResult> Comments(int count = 5)
+        public async Task<ActionResult> Comments(int count = 5)
         {
             var enumerableAllComments = await _repository.GetAllComments();
             var allComments = enumerableAllComments.ToList();
