@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace A1.Models
 {
@@ -6,9 +7,9 @@ namespace A1.Models
     {
         [Key] public int Id { get; set; }
 
-        public string UserComment { get; set; }
+        [Required] public string UserComment { get; set; }
 
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         public string Time { get; set; }
 
