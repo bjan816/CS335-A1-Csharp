@@ -98,8 +98,7 @@ namespace A1.Controllers
             IEnumerable<Product> matchedProducts = await _repository.GetAllProducts();
 
             matchedProducts = matchedProducts
-                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+                .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
             return Ok(matchedProducts);
         }
