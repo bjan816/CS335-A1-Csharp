@@ -32,7 +32,7 @@ namespace A1.Data
                 .Take(count);
         }
 
-        public async Task<Comment?> GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(int commentId)
         {
             return await _dbContext.Comments
                 .FirstOrDefaultAsync(c => c.Id == commentId);

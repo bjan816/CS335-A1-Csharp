@@ -133,7 +133,7 @@ namespace A1.Controllers
         [HttpGet("GetComment/{commentId}")]
         public async Task<ActionResult> GetComment(int commentId)
         {
-            Comment? comment = await _repository.GetCommentById(commentId);
+            Comment comment = await _repository.GetCommentById(commentId);
 
             if (comment == null)
             {
@@ -159,7 +159,7 @@ namespace A1.Controllers
                 UserComment = commentInput.UserComment,
                 Name = commentInput.Name,
                 Time = DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ"),
-                IP = Request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown"
+                IP = Request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? ""
             };
 
             await _repository.AddComment(newComment);
