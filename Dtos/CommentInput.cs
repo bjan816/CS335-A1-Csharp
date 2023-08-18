@@ -1,8 +1,10 @@
-﻿namespace A1.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace A1.Dtos
 {
     public class CommentInput
     {
-        public string UserComment { get; set; }
-        public string Name { get; set; }
+        [Required] public string UserComment { get; set; }
+        [Required] public string Name { get; set; }
     }
 }
