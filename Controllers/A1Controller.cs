@@ -146,7 +146,7 @@ namespace A1.Controllers
         // POST /webapi/WriteComment
 
         [HttpPost("WriteComment")]
-        public async Task<ActionResult> WriteComment([FromBody] CommentInput commentInput)
+        public async Task<ActionResult> WriteComment(CommentInput commentInput)
         {
             if (string.IsNullOrWhiteSpace(commentInput.UserComment) || string.IsNullOrWhiteSpace(commentInput.Name))
             {
